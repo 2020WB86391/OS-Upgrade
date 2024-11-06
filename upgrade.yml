@@ -38,7 +38,7 @@
       delay: 20
 
     - name: Create backup directory on control server
-      delegate_to: localhost
+      delegate_to: 192.168.29.176
       ansible.builtin.file:
         path: "/var/tmp/backups/{{ inventory_hostname }}"
         state: directory
@@ -49,7 +49,7 @@
         dest: "/var/tmp/backups/{{ inventory_hostname }}"
         mode: pull
         rsync_opts: "--compress"
-      delegate_to: localhost
+      delegate_to: 192.168.29.176
 
     - name: Check file system utilization
       ansible.builtin.command: df -h /
