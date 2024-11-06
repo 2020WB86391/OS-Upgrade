@@ -2,4 +2,11 @@
 #server1 ansible_host=192.168.1.10 vm_name=server1_vm
 #server2 ansible_host=192.168.1.11 vm_name=server2_vm
 
-server1 ansible_host=192.168.29.105 vm_name=test1
+#server1 ansible_host=192.168.29.105 vm_name=test1
+#
+#
+#server1 ansible_host=192.168.29.96 vm_name=teat2 ansible_user=root
+
+
+test3	ansible_host=192.168.29.17 vm_name=test3 ansible_user=root
+test4	ansible_host=192.168.29.140	vm_name=test4	ansible_user=root
