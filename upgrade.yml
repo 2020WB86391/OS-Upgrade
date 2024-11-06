@@ -19,10 +19,21 @@
         dest: /usr/local/bin/backup_script.sh
         mode: '0755'
 
-    - name: Execute backup script on target servers
+    - name: Execute backup script on target servers asynchronously
       ansible.builtin.shell: /usr/local/bin/backup_script.sh
       args:
         chdir: /var/tmp
+      async: 180  # Allow up to 3 minutes
+      poll: 0     # Run asynchronously
+      register: backup_job_id
+
+    - name: Wait for backup script to complete
+      ansible.builtin.async_status:
+        jid: "{{ backup_job_id.ansible_job_id }}"
+      register: backup_result
+      until: backup_result.finished
+      retries: 10
+      delay: 20
 
     - name: Create backup directory on control server
       delegate_to: localhost
@@ -35,6 +46,7 @@
         src: /var/tmp/backups/
         dest: "/var/tmp/backups/{{ inventory_hostname }}"
         mode: pull
+        rsync_opts: "--compress"
       delegate_to: localhost
 
     - name: Check file system utilization
