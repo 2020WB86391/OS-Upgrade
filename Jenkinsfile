@@ -8,7 +8,7 @@ pipeline {
         }
         stage('Run Ansible Playbook') {
             steps {
-                ansiblePlaybook installation: '/root/ansible-playbook', playbook: 'upgrade.yml', extraVars: '@group_vars/all/vault.yml', vaultCredentialsId: 'vault-credentials-id'
+                ansiblePlaybook installation: '/root/ansible-playbook', playbook: 'upgrade.yml', extraVars: [ansible_vault_file: 'group_vars/all/vault.yml'], vaultCredentialsId: 'vault-credentials-id'
             }
         }
     }
