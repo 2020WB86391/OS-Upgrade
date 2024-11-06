@@ -1,0 +1,5 @@
+[ubuntu_servers]
+#server1 ansible_host=192.168.1.10 vm_name=server1_vm
+#server2 ansible_host=192.168.1.11 vm_name=server2_vm
+
+server1 ansible_host=192.168.29.105 vm_name=test1
