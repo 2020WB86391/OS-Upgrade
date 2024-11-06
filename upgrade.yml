@@ -23,6 +23,8 @@
       ansible.builtin.shell: /usr/local/bin/backup_script.sh
       args:
         chdir: /var/tmp
+      environment:
+        CONTROL_SERVER_IP: "192.168.29.176"
       async: 180  # Allow up to 3 minutes
       poll: 0     # Run asynchronously
       register: backup_job_id
