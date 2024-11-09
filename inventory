@@ -19,5 +19,5 @@
 #test3 ansible_host=192.168.29.17 ansible_ssh_user=root ansible_ssh_pass='admuser'
 #test4 ansible_host=192.168.29.140 ansible_ssh_user=root ansible_ssh_pass='admuser'
 
-client1 ansible_host=192.168.179.93 ansible_ssh_user=root ansible_ssh_pass='admuser'
-client2 ansible_host=192.168.179.19  ansible_ssh_user=root ansible_ssh_pass='admuser'
+client1 ansible_host=192.168.29.238 ansible_ssh_user=root ansible_ssh_pass='admuser'
+client2 ansible_host=192.168.29.74  ansible_ssh_user=root ansible_ssh_pass='admuser'
