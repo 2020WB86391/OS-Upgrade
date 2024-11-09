@@ -1,0 +1,175 @@
+Started by timer
+Obtained Jenkinsfile from git https://github.com/2020WB86391/OS-Upgrade.git
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/lib/jenkins/workspace/Ubuntu-Upgrade
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+using credential git-credentials
+ > git rev-parse --resolve-git-dir /var/lib/jenkins/workspace/Ubuntu-Upgrade/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/2020WB86391/OS-Upgrade.git # timeout=10
+Fetching upstream changes from https://github.com/2020WB86391/OS-Upgrade.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.34.1'
+using GIT_ASKPASS to set credentials 
+ > git fetch --tags --force --progress -- https://github.com/2020WB86391/OS-Upgrade.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/master^{commit} # timeout=10
+Checking out Revision 67cf26f82abb907e9a9968d7d82ff82506877abe (refs/remotes/origin/master)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 67cf26f82abb907e9a9968d7d82ff82506877abe # timeout=10
+Commit message: "Modified IP in inv"
+ > git rev-list --no-walk 434902661d043b6d5775e34e042c734cced0b10a # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Checkout)
+[Pipeline] git
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+using credential git-credentials
+ > git rev-parse --resolve-git-dir /var/lib/jenkins/workspace/Ubuntu-Upgrade/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/2020WB86391/OS-Upgrade.git # timeout=10
+Fetching upstream changes from https://github.com/2020WB86391/OS-Upgrade.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.34.1'
+using GIT_ASKPASS to set credentials 
+ > git fetch --tags --force --progress -- https://github.com/2020WB86391/OS-Upgrade.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/master^{commit} # timeout=10
+Checking out Revision 67cf26f82abb907e9a9968d7d82ff82506877abe (refs/remotes/origin/master)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 67cf26f82abb907e9a9968d7d82ff82506877abe # timeout=10
+ > git branch -a -v --no-abbrev # timeout=10
+ > git branch -D master # timeout=10
+ > git checkout -b master 67cf26f82abb907e9a9968d7d82ff82506877abe # timeout=10
+Commit message: "Modified IP in inv"
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Run Ansible Playbook)
+[Pipeline] ansiblePlaybook
+[Ubuntu-Upgrade] $ ansible-playbook upgrade.yml --vault-password-file /var/lib/jenkins/workspace/Ubuntu-Upgrade/vault3989960895052611519.password -e ********
+
+PLAY [Upgrade Ubuntu] **********************************************************
+
+TASK [Gather facts] ************************************************************
+ok: [client1]
+ok: [client2]
+
+TASK [Create backup directory on target servers] *******************************
+changed: [client1]
+changed: [client2]
+
+TASK [Copy backup script to target servers] ************************************
+changed: [client1]
+changed: [client2]
+
+TASK [Execute backup script on target servers asynchronously] ******************
+changed: [client1]
+changed: [client2]
+
+TASK [Wait for backup script to complete] **************************************
+FAILED - RETRYING: Wait for backup script to complete (10 retries left).
+FAILED - RETRYING: Wait for backup script to complete (10 retries left).
+changed: [client2]
+changed: [client1]
+
+TASK [Create backup directory on control server] *******************************
+ok: [client1 -> 192.168.29.176]
+ok: [client2 -> 192.168.29.176]
+
+TASK [Pull backups from target servers to control server] **********************
+changed: [client2 -> 192.168.29.176]
+changed: [client1 -> 192.168.29.176]
+
+TASK [Check file system utilization] *******************************************
+changed: [client1]
+changed: [client2]
+
+TASK [Fail if disk space utilization is over 85%] ******************************
+skipping: [client1]
+skipping: [client2]
+
+TASK [Check UFW status] ********************************************************
+changed: [client1]
+changed: [client2]
+
+TASK [Stop UFW if it is active] ************************************************
+skipping: [client1]
+skipping: [client2]
+
+TASK [Check UFW status again] **************************************************
+changed: [client1]
+changed: [client2]
+
+TASK [Fail if UFW is still active] *********************************************
+skipping: [client1]
+skipping: [client2]
+
+TASK [Get current OS version before upgrade] ***********************************
+changed: [client1]
+changed: [client2]
+
+TASK [Update all packages to the latest version] *******************************
+changed: [client2]
+changed: [client1]
+
+TASK [Install the update-manager-core package] *********************************
+ok: [client1]
+ok: [client2]
+
+TASK [Ensure all updates are applied] ******************************************
+changed: [client1]
+[WARNING]: Consider using the apt module rather than running 'apt-get'.  If you
+need to use command because apt is insufficient you can add 'warn: false' to
+this command task or set 'command_warnings=False' in ansible.cfg to get rid of
+this message.
+changed: [client2]
+
+TASK [Reboot the server after applying updates] ********************************
+changed: [client2]
+changed: [client1]
+
+TASK [Upgrade the distribution to Ubuntu] **************************************
+changed: [client2]
+changed: [client1]
+
+TASK [Reboot the server after distribution upgrade] ****************************
+changed: [client2]
+changed: [client1]
+
+TASK [Get OS version after upgrade] ********************************************
+changed: [client1]
+changed: [client2]
+
+TASK [Fail if OS version has not changed] **************************************
+skipping: [client1]
+skipping: [client2]
+
+TASK [Inform if OS version has changed, indicating a successful upgrade] *******
+ok: [client1] => {
+    "msg": "Upgrade successful. OS version changed from Release:\t18.04 to Release:\t20.04."
+}
+ok: [client2] => {
+    "msg": "Upgrade successful. OS version changed from Release:\t20.04 to Release:\t22.04."
+}
+
+PLAY RECAP *********************************************************************
+client1                    : ok=19   changed=15   unreachable=0    failed=0    skipped=4    rescued=0    ignored=0   
+client2                    : ok=19   changed=15   unreachable=0    failed=0    skipped=4    rescued=0    ignored=0   
+
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
